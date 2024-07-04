@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 // } from "./utils/firebase";
 // import { registerUser } from "./utils/backendlessBase";
 import { loginUserFn, signUpUserFn } from "shared/api/auth/authApi";
+import { useAccessToken, useTokenValid } from "./api/hooks/useAuth";
 
 interface AuthFormProps {
   mode: "signin" | "register";
@@ -34,9 +35,10 @@ const AuthForm = ({
   const [formState, setFormState] = useState(initialFormState);
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+  useAccessToken(token);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const { login } = useAuth();
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // registerUser
@@ -46,6 +48,7 @@ const AuthForm = ({
       setIsSubmitting(true);
       if (mode === "signin") {
         loginUserFn({ login: formState.email, password: formState.password });
+        console.log(token);
       } else {
         signUpUserFn({
           name: formState.name,

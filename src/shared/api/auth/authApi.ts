@@ -35,6 +35,10 @@ export const authApi = axios.create({
 import { GenericResponse, ILoginResponse, IUserResponse } from "./types";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
+import {
+  useAccessToken,
+  useTokenValid,
+} from "pages/sign-in/ui/api/hooks/useAuth";
 
 export const refreshAccessTokenFn = async () => {
   const response = await authApi.get<ILoginResponse>("auth/refresh");
@@ -67,9 +71,7 @@ export const signUpUserFn = async (user: {
 };
 
 export const verifyTokenlFn = async (token: string) => {
-  const response = await authApi.get<GenericResponse>(
-    `/users/isvalidusertoken/${token}`
-  );
+  const response = await authApi.get(`/users/isvalidusertoken/${token}`);
   return response.data;
 };
 
@@ -90,10 +92,9 @@ export const loginUserFn = async (user: {
 }) => {
   const response = await authApi.post<ILoginResponse>("/users/login", user);
   const token = response.data["user-token"];
-  // const isverify = verifyTokenlFn(token);
-  // console.log(isverify);
 
   window.localStorage.setItem("token", token);
+
   return response.data;
 };
 
