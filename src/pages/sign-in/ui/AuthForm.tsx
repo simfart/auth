@@ -10,6 +10,11 @@ import { useNavigate } from "react-router-dom";
 // import { registerUser } from "./utils/backendlessBase";
 import { loginUserFn, signUpUserFn } from "shared/api/auth/authApi";
 import { useAccessToken, useTokenValid } from "./api/hooks/useAuth";
+// import { useLogin } from "shared/api/auth/useAuth";
+import { LoginVariables } from "shared/api/auth/types";
+import { useLogin } from "./api/hooks/useLogin";
+import { QUERY_KEY } from "shared/constants/queryKeys";
+import { QueryClient, useQuery } from "react-query";
 
 interface AuthFormProps {
   mode: "signin" | "register";
@@ -33,10 +38,12 @@ const AuthForm = ({
   linkText,
 }: AuthFormProps) => {
   const [formState, setFormState] = useState(initialFormState);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
+  const { mutate: login } = useLogin<LoginVariables>();
+  // const Myuser = useQuery(QUERY_KEY.user);
   const token = localStorage.getItem("token");
-  useAccessToken(token);
+  // useAccessToken(token);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const { login } = useAuth();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,8 +54,11 @@ const AuthForm = ({
     try {
       setIsSubmitting(true);
       if (mode === "signin") {
-        loginUserFn({ login: formState.email, password: formState.password });
-        console.log(token);
+        // loginUserFn({ login: formState.email, password: formState.password });
+        login({ login: formState.email, password: formState.password });
+
+        // console.log("QUERY_KEY.user", myuser);
+        console.log("login", token);
       } else {
         signUpUserFn({
           name: formState.name,
@@ -56,17 +66,6 @@ const AuthForm = ({
           password: formState.password,
         });
       }
-      // if (user !== null) {
-      //   const userData = {
-      //     userId: user?.uid || "",
-      //     name: user?.displayName || "",
-      //     email: user?.email || "",
-      //   };
-
-      //   // login(userData);
-      //   navigate("/");
-      // }
-      // setIsSubmitting(false);
     } catch (err) {
       if (err instanceof Error) {
         // Handle authentication-specific errors gracefully

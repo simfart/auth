@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { verifyTokenlFn } from "shared/api/auth/authApi";
+// import { QUERY_KEY } from "shared/constants/queryKeys";
 
 export const useAccessToken = (token: string) => {
   const accessToken = useQuery(

@@ -1,8 +1,8 @@
-// import { HomePage } from "pages/home";
 // import { ErrorPage } from "shared/ui";
 import { Route, Router, Routes, createBrowserRouter } from "react-router-dom";
 import { RegisterPage, SignInPage } from "pages/sign-in";
 import { FC } from "react";
+import { HomePage } from "pages/home";
 // import { RequireAuth } from "shared/router";
 
 export const RoutesProvider: FC = () => {
@@ -11,9 +11,9 @@ export const RoutesProvider: FC = () => {
       <Route
         path="/"
         element={
-          <RegisterPage />
+          // <RegisterPage />
           // <RequireAuth>
-          //   <HomePage />
+          <HomePage />
           // </RequireAuth>
         }
       />

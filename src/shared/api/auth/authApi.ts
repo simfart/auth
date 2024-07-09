@@ -47,6 +47,11 @@ export const refreshAccessTokenFn = async () => {
 
 authApi.interceptors.response.use(
   (response) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      response.headers.Authorization = token;
+      // config.withCredentials = true;
+    }
     return response;
   },
   async (error) => {
@@ -75,25 +80,14 @@ export const verifyTokenlFn = async (token: string) => {
   return response.data;
 };
 
-const fetchProfile = async () => {
-  const token = localStorage.getItem("token");
-  const response = await fetch("/api/profile", {
-    headers: { Authorization: ` Bearer ${token} ` },
-  });
-  if (!response.ok) {
-    throw new Error(" Ответ сети не в порядке ");
-  }
-  return response.json();
-};
-
 export const loginUserFn = async (user: {
   login: string;
   password: string;
 }) => {
   const response = await authApi.post<ILoginResponse>("/users/login", user);
-  const token = response.data["user-token"];
+  // const token = response.data["user-token"];
 
-  window.localStorage.setItem("token", token);
+  // window.localStorage.setItem("token", token);
 
   return response.data;
 };
@@ -119,13 +113,21 @@ export const verifyEmailFn = async (verificationCode: string) => {
   return response.data;
 };
 
+export const verifyTokenFn = async (token: string) => {
+  const response = await authApi.get<GenericResponse>(
+    `/users/isvalidusertoken/${token}`
+  );
+  return response.data;
+};
+
 export const logoutUserFn = async () => {
   const response = await authApi.get<GenericResponse>("auth/logout");
   return response.data;
 };
 
-export const getMeFn = async () => {
-  const response = await authApi.get<IUserResponse>("users/me");
+export const getUserFn = async () => {
+  const ownerId = localStorage.getItem("ownerId");
+  const response = await authApi.get<IUserResponse>(`data/Users/${ownerId}`);
   return response.data;
 };
 

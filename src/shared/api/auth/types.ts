@@ -1,30 +1,35 @@
 export interface IUser {
   name: string;
   email: string;
-  role: string;
-  _id: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  lastLogin: number;
+  created: number;
+  ___class: string;
+  ownerId: string;
+  "user-token": string;
+  objectId: string;
 }
 
 export interface GenericResponse {
   status: string;
   message: string;
-  token: string;
+  token: string | undefined;
+  verifyToken?: boolean;
 }
 
-export interface ILoginResponse {
+export interface ILoginResponse extends IUser {
   status: string;
 
   // access_token: string;
   "user-token": string;
+
+  // user: IUser;
 }
 
-export interface IUserResponse {
+export interface IUserResponse extends IUser {
   status: string;
-  data: {
-    user: IUser;
-  };
 }
+
+export type LoginVariables = {
+  login: string;
+  password: string;
+};

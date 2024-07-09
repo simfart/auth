@@ -1,11 +1,19 @@
+import { useUser } from "pages/sign-in/ui/api/hooks/useUser";
 import { FC, useContext } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import { getUserFn, loginUserFn } from "shared/api/auth/authApi";
 import { CurrentUser } from "shared/api/currentUser";
+import { User } from "shared/api/models";
+import { QUERY_KEY } from "shared/constants/queryKeys";
+import { useUserStore } from "shared/store/user";
 
 export const Header: FC = () => {
-  const currentUser = useContext(CurrentUser);
+  const currentUser = useUserStore().authUser;
+  console.log(currentUser);
+
   return (
     <nav className="navbar navbar-light">
-      jjjjj
       {/* <div className="container">
       <Link className="navbar-brand" to="/" prefetch="intent">
         conduit
