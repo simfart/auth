@@ -1,4 +1,4 @@
-import { useUser } from "pages/sign-in/ui/api/hooks/useUser";
+import { useUser } from "pages/auth/ui/api/hooks/useUser";
 import { FC, useContext } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";

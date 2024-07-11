@@ -7,6 +7,7 @@ const BASE_URL = "https://keywire-us.backendless.app/api/";
 
 const API_HEADER = {
   "Content-Type": "application/json",
+  "user-token": `${localStorage.getItem("token")}`,
 };
 
 // export const authApi = axios.create({
@@ -35,10 +36,7 @@ export const authApi = axios.create({
 import { GenericResponse, ILoginResponse, IUserResponse } from "./types";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import {
-  useAccessToken,
-  useTokenValid,
-} from "pages/sign-in/ui/api/hooks/useAuth";
+import { useAccessToken, useTokenValid } from "pages/auth/ui/api/hooks/useAuth";
 
 export const refreshAccessTokenFn = async () => {
   const response = await authApi.get<ILoginResponse>("auth/refresh");
@@ -75,8 +73,16 @@ export const signUpUserFn = async (user: {
   return response.data;
 };
 
-export const verifyTokenlFn = async (token: string) => {
+export const verifyTokenlFn = async (token: string | null) => {
   const response = await authApi.get(`/users/isvalidusertoken/${token}`);
+  return response.data;
+};
+
+export const verifyTokenFn = async () => {
+  const token = localStorage.getItem("token");
+  const response = await authApi.get<GenericResponse>(
+    `/users/isvalidusertoken/${token}`
+  );
   return response.data;
 };
 
@@ -109,13 +115,6 @@ export const loginUserFn = async (user: {
 export const verifyEmailFn = async (verificationCode: string) => {
   const response = await authApi.get<GenericResponse>(
     `auth/verifyemail/${verificationCode}`
-  );
-  return response.data;
-};
-
-export const verifyTokenFn = async (token: string) => {
-  const response = await authApi.get<GenericResponse>(
-    `/users/isvalidusertoken/${token}`
   );
   return response.data;
 };

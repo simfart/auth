@@ -6,6 +6,8 @@ type Store = {
   requestLoading: boolean;
   setAuthUser: (user: IUser | null) => void;
   setRequestLoading: (isLoading: boolean) => void;
+  isVerifyToken: boolean;
+  setVerifyToken: (token: string | null) => void;
 };
 
 export const useUserStore = create<Store>((set) => ({
@@ -14,4 +16,6 @@ export const useUserStore = create<Store>((set) => ({
   setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
   setRequestLoading: (isLoading) =>
     set((state) => ({ ...state, requestLoading: isLoading })),
+  isVerifyToken: false,
+  setVerifyToken: (token) => set((state) => ({ ...state, verifyToken: token })),
 }));

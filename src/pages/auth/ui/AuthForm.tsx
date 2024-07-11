@@ -17,7 +17,7 @@ import { QUERY_KEY } from "shared/constants/queryKeys";
 import { QueryClient, useQuery } from "react-query";
 
 interface AuthFormProps {
-  mode: "signin" | "register";
+  mode: "login" | "register";
   title: string;
   buttonText: string;
   linkUrl: string;
@@ -53,7 +53,7 @@ const AuthForm = ({
     // handle user logIn / register
     try {
       setIsSubmitting(true);
-      if (mode === "signin") {
+      if (mode === "login") {
         // loginUserFn({ login: formState.email, password: formState.password });
         login({ login: formState.email, password: formState.password });
 
