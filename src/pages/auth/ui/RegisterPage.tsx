@@ -1,5 +1,5 @@
 import { FC } from "react";
-import AuthForm from "./AuthForm";
+import AuthForm from "./auth-form/AuthForm";
 
 export const RegisterPage: FC = () => {
   return (
@@ -14,5 +14,3 @@ export const RegisterPage: FC = () => {
     </div>
   );
 };
-
-// export default RegisterPage;

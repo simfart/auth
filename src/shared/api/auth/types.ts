@@ -13,7 +13,7 @@ export interface GenericResponse {
   status: string;
   message: string;
   token: string | undefined;
-  verifyToken?: boolean;
+  acsee?: boolean;
 }
 
 export interface ILoginResponse extends IUser {
@@ -28,8 +28,3 @@ export interface ILoginResponse extends IUser {
 export interface IUserResponse extends IUser {
   status: string;
 }
-
-export type LoginVariables = {
-  login: string;
-  password: string;
-};
