@@ -1,11 +1,11 @@
-import axios from "axios";
-import { GenericResponse, ILoginResponse, IUserResponse } from "./types";
+import axios from 'axios';
+import { GenericResponse, ILoginResponse, IUserResponse } from './types';
 
-const BASE_URL = "https://keywire-us.backendless.app/api/";
+const BASE_URL = 'https://keywire-us.backendless.app/api';
 
 const API_HEADER = {
-  "Content-Type": "application/json",
-  "user-token": `${localStorage.getItem("token")}`,
+  'Content-Type': 'application/json',
+  'user-token': `${localStorage.getItem('token')}`,
 };
 
 export const authApi = axios.create({
@@ -15,15 +15,19 @@ export const authApi = axios.create({
 });
 
 authApi.interceptors.request.use(
-  (response) => {
-    // const token = localStorage.getItem("token");
-    // if (token) {
-    //   config.headers.Authorization = `${token}`;
-    //   config.withCredentials = true;
-    // }
-    return response;
+  async (config) => {
+    if (config.headers.isTokenNeed) {
+      const isVerified = await verifyTokenFn();
+      if (isVerified) {
+        const token = localStorage.getItem('token');
+
+        config.headers['user-token'] = `${token}`;
+      }
+    }
+
+    return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export const signUpUserFn = async (user: {
@@ -31,43 +35,45 @@ export const signUpUserFn = async (user: {
   email: string;
   password: string;
 }) => {
-  const response = await authApi.post<GenericResponse>("/users/register", user);
+  const response = await authApi.post<GenericResponse>('/users/register', user);
   return response.data;
 };
 
-
 export const verifyTokenFn = async () => {
-  const token = localStorage.getItem("token");
-  const response = await authApi.get<GenericResponse>(
-    `/users/isvalidusertoken/${token}`
-  );
-  return response.data;
+  const token = localStorage.getItem('token');
+  return await authApi
+    .get<boolean>(`/users/isvalidusertoken/${token}`)
+    .then((res) => res.data);
 };
 
 export const loginUserFn = async (user: {
   login: string;
   password: string;
 }) => {
-  const response = await authApi.post<ILoginResponse>("/users/login", user);
+  const response = await authApi.post<ILoginResponse>('/users/login', user);
   return response.data;
 };
 
 export const verifyEmailFn = async (verificationCode: string) => {
   const response = await authApi.get<GenericResponse>(
-    `auth/verifyemail/${verificationCode}`
+    `/auth/verifyemail/${verificationCode}`,
   );
   return response.data;
 };
 
 export const logoutUserFn = async () => {
-  const response = await authApi.get<GenericResponse>("auth/logout");
+  const response = await authApi.get<GenericResponse>('/auth/logout');
   return response.data;
 };
 
 export const getUserFn = async () => {
+  const ownerId = localStorage.getItem('ownerId');
+  const response = await authApi.get<IUserResponse>(`/data/Users/${ownerId}`, {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
 
-  const ownerId = localStorage.getItem("ownerId");
-  const response = await authApi.get<IUserResponse>(`data/Users/${ownerId}`);
   return response.data;
 };
 

@@ -1,16 +1,17 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from 'react';
 import {
   QueryClient,
   QueryClientProvider as LQueryClientProvider,
   QueryCache,
-} from "react-query";
+} from 'react-query';
 
-import { ReactQueryDevtools } from "react-query/devtools";
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const client = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     },
   },
   queryCache: new QueryCache({}),
