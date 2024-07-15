@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { FC } from "react";
-import { useVerifyToken } from "../../pages/auth/ui/hooks/useToken";
+import { useToken } from "pages/auth/ui/hooks/useToken";
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
@@ -9,6 +9,6 @@ type ProtectedRouteProps = {
 };
 
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
-  const isAuthenticated = useVerifyToken();
+  const isAuthenticated = useToken();
   return isAuthenticated ? children : <Navigate to="/login" />;
 };

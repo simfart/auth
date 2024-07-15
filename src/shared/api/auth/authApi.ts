@@ -10,7 +10,7 @@ const API_HEADER = {
 
 export const authApi = axios.create({
   baseURL: BASE_URL,
-  headers: API_HEADER,
+  // headers: API_HEADER,
   // withCredentials: true,
 });
 
@@ -35,10 +35,6 @@ export const signUpUserFn = async (user: {
   return response.data;
 };
 
-export const verifyTokenlFn = async (token: string | null) => {
-  const response = await authApi.get(`/users/isvalidusertoken/${token}`);
-  return response.data;
-};
 
 export const verifyTokenFn = async () => {
   const token = localStorage.getItem("token");
@@ -69,6 +65,7 @@ export const logoutUserFn = async () => {
 };
 
 export const getUserFn = async () => {
+
   const ownerId = localStorage.getItem("ownerId");
   const response = await authApi.get<IUserResponse>(`data/Users/${ownerId}`);
   return response.data;
