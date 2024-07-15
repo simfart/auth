@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { FC } from "react";
-import { useVerifyToken } from "../../pages/auth/ui/api/hooks/useVerifyToken";
+import { useVerifyToken } from "../../pages/auth/ui/hooks/useToken";
 
 type ProtectedRouteProps = {
   children: React.ReactElement;

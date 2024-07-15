@@ -1,5 +1,5 @@
 import { FC } from "react";
-import AuthForm from "./auth-form/AuthForm";
+import { AuthForm } from "./auth-form";
 
 export const RegisterPage: FC = () => {
   return (
@@ -8,7 +8,7 @@ export const RegisterPage: FC = () => {
         mode="register"
         title="Create a new account"
         buttonText="Register"
-        linkUrl="/sign-in"
+        linkUrl="/login"
         linkText="Sign in"
       />
     </div>

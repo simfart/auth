@@ -1,5 +1,5 @@
 import { FC } from "react";
-import AuthForm from "./auth-form/AuthForm";
+import { AuthForm } from "./auth-form";
 
 export const LoginPage: FC = () => {
   return (
@@ -8,8 +8,8 @@ export const LoginPage: FC = () => {
         mode="login"
         title="Sign in"
         buttonText="Login"
-        linkUrl="/login"
-        linkText="Sign in"
+        linkUrl="/register"
+        linkText="Sign up"
       />
     </div>
   );

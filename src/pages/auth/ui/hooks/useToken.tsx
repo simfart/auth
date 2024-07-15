@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { verifyTokenlFn } from "shared/api/auth/authApi";
 import { QUERY_KEY } from "shared/constants/queryKeys";
 
-export const useVerifyToken = () => {
+export const useToken = () => {
   useQuery({
     queryKey: [QUERY_KEY.accessToken],
     queryFn: async () => {
@@ -13,7 +13,7 @@ export const useVerifyToken = () => {
   });
 };
 
-export const useVerifyToken2 = () => {
+export const useVerifyToken = () => {
   const token = localStorage.getItem("token");
   const { data: accessToken } = useQuery(
     [QUERY_KEY.accessToken],

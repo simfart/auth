@@ -1,1 +1,0 @@
-export { backendBase } from "./backend";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { signUpUserFn } from "shared/api/auth/authApi";
-import { useLogin } from "../api/hooks/useLogin";
+import { useLogin } from "../hooks/useLogin";
 import "./AuthForm.scss";
 
 interface AuthFormProps {
@@ -18,7 +18,7 @@ const initialFormState = {
   name: "",
 };
 
-const AuthForm = ({
+export const AuthForm = ({
   mode,
   title,
   buttonText,
@@ -27,13 +27,11 @@ const AuthForm = ({
 }: AuthFormProps) => {
   const [formState, setFormState] = useState(initialFormState);
   const { mutate: login } = useLogin();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      setIsSubmitting(true);
       if (mode === "login") {
         login({ login: formState.email, password: formState.password });
       } else {
@@ -104,5 +102,3 @@ const AuthForm = ({
     </form>
   );
 };
-
-export default AuthForm;

@@ -7,6 +7,7 @@ import { useUserStore } from "shared/store/user";
 
 export const useLogin = () => {
   const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   const store = useUserStore();
 
@@ -17,8 +18,8 @@ export const useLogin = () => {
 
       queryClient.setQueryData([QUERY_KEY.user], data);
       store.setAuthUser(data);
-      // setIsLoggedIn(true)
-      //   queryClient.invalidateQueries(QUERY_KEY.user);
+
+      queryClient.invalidateQueries(QUERY_KEY.user);
 
       navigate("/", { replace: true });
     },
