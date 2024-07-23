@@ -14,24 +14,3 @@ export const useToken = () => {
     [data, isLoading],
   );
 };
-
-// export const useVerifyToken = () => {
-//   const token = localStorage.getItem("token");
-//   const { data: accessToken } = useQuery(
-//     [QUERY_KEY.accessToken],
-//     async () => await verifyTokenlFn(token),
-//     {
-//       enabled: !!token,
-//       refetchOnMount: false,
-//       refetchOnWindowFocus: false,
-//       refetchOnReconnect: false,
-//       initialData: token,
-//       onError: (err) => {
-//         console.log("useAccessToken", err);
-//         localStorage.removeItem("token");
-//       },
-//     }
-//   );
-
-//   return accessToken ?? null;
-// };

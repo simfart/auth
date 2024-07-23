@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { signUpUserFn } from "shared/api/auth/authApi";
-import { useLogin } from "../hooks/useLogin";
-import "./AuthForm.scss";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useRegister, useLogin } from '../hooks';
+
+import './AuthForm.scss';
+import { Loader } from 'shared/ui';
 
 interface AuthFormProps {
-  mode: "login" | "register";
+  mode: 'login' | 'register';
   title: string;
   buttonText: string;
   linkUrl: string;
@@ -13,9 +14,9 @@ interface AuthFormProps {
 }
 
 const initialFormState = {
-  email: "",
-  password: "",
-  name: "",
+  email: '',
+  password: '',
+  name: '',
 };
 
 export const AuthForm = ({
@@ -26,16 +27,17 @@ export const AuthForm = ({
   linkText,
 }: AuthFormProps) => {
   const [formState, setFormState] = useState(initialFormState);
-  const { mutate: login } = useLogin();
+  const { mutate: login, isLoading: isloadLogin } = useLogin();
+  const { mutate: register, isLoading } = useRegister();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      if (mode === "login") {
+      if (mode === 'login') {
         login({ login: formState.email, password: formState.password });
       } else {
-        signUpUserFn({
+        register({
           name: formState.name,
           email: formState.email,
           password: formState.password,
@@ -46,11 +48,15 @@ export const AuthForm = ({
         console.error(err.message);
         alert(err.message);
       } else {
-        console.error("Unexpected error", err);
+        console.error('Unexpected error', err);
       }
       return null;
     }
   };
+
+  if (isLoading || isloadLogin) {
+    return <Loader />;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="auth-container">
@@ -77,7 +83,7 @@ export const AuthForm = ({
           }))
         }
       />
-      {mode === "register" && (
+      {mode === 'register' && (
         <>
           <input
             type="text"

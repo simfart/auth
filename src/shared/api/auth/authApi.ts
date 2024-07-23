@@ -17,12 +17,8 @@ export const authApi = axios.create({
 authApi.interceptors.request.use(
   async (config) => {
     if (config.headers.isTokenNeed) {
-      const isVerified = await verifyTokenFn();
-      if (isVerified) {
-        const token = localStorage.getItem('token');
-
-        config.headers['user-token'] = `${token}`;
-      }
+      const token = localStorage.getItem('token');
+      config.headers['user-token'] = `${token}`;
     }
 
     return config;
@@ -30,7 +26,7 @@ authApi.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-export const signUpUserFn = async (user: {
+export const registerUserFn = async (user: {
   name: string;
   email: string;
   password: string;
@@ -62,7 +58,11 @@ export const verifyEmailFn = async (verificationCode: string) => {
 };
 
 export const logoutUserFn = async () => {
-  const response = await authApi.get<GenericResponse>('/auth/logout');
+  const response = await authApi.get('/users/logout', {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
   return response.data;
 };
 
@@ -77,5 +77,5 @@ export const getUserFn = async () => {
   return response.data;
 };
 
-//111@11.qq
+//111@12.qq
 //1111
