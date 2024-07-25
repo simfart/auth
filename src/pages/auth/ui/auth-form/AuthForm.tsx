@@ -4,6 +4,7 @@ import { useRegister, useLogin } from '../hooks';
 import { Loader } from 'shared/ui';
 
 import './AuthForm.scss';
+import { useUserStore } from 'shared/store';
 
 interface AuthFormProps {
   mode: 'login' | 'register';

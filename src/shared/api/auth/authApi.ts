@@ -37,6 +37,7 @@ export const registerUserFn = async (user: {
 
 export const verifyTokenFn = async () => {
   const token = localStorage.getItem('token');
+  console.log('token', token);
   return await authApi
     .get<boolean>(`/users/isvalidusertoken/${token}`)
     .then((res) => res.data);
@@ -47,6 +48,16 @@ export const loginUserFn = async (user: {
   password: string;
 }) => {
   const response = await authApi.post<ILoginResponse>('/users/login', user);
+  return response.data;
+};
+
+export const uptateUserFn = async (user: { email?: string; name?: string }) => {
+  const userId = localStorage.getItem('ownerId');
+  const response = await authApi.put<ILoginResponse>(`/users/${userId}`, user, {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
   return response.data;
 };
 
