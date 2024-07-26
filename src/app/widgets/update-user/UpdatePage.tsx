@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUpdateUser } from './hooks/useUpdateUser';
 import { Loader } from '../../../shared/ui/loader/Loader';
@@ -14,13 +14,20 @@ interface IUserForm {
 export const UpdatePage: FC = () => {
   const { user, isLoading: isLoadingUser } = useUser();
 
-  const initialFormState = {
+  const [formState, setFormState] = useState({
     email: user?.email,
     name: user?.name,
-  };
-
-  const [formState, setFormState] = useState(initialFormState);
+  });
   const { mutate, isLoading } = useUpdateUser();
+
+  useEffect(() => {
+    if (user) {
+      setFormState({
+        email: user?.email,
+        name: user?.name,
+      });
+    }
+  }, [user]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,6 +56,7 @@ export const UpdatePage: FC = () => {
   if (isLoading || isLoadingUser) {
     return <Loader />;
   }
+
   return (
     <>
       <form className="updateUser" onSubmit={handleSubmit}>
