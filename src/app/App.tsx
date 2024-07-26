@@ -1,8 +1,8 @@
-import "./App.scss";
-import { FC } from "react";
-import { RoutesProvider } from "./routes/RoutesProvider";
-import { QueryClientProvider } from "./routes/QueryClientProvider";
-import { BrowserRouter } from "react-router-dom";
+import { FC } from 'react';
+import { RoutesProvider, QueryClientProvider } from './routes';
+import { BrowserRouter } from 'react-router-dom';
+
+import './App.scss';
 
 export const App: FC = () => {
   return (

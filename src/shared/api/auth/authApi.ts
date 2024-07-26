@@ -3,15 +3,8 @@ import { GenericResponse, ILoginResponse, IUserResponse } from './types';
 
 const BASE_URL = 'https://keywire-us.backendless.app/api';
 
-const API_HEADER = {
-  'Content-Type': 'application/json',
-  'user-token': `${localStorage.getItem('token')}`,
-};
-
 export const authApi = axios.create({
   baseURL: BASE_URL,
-  // headers: API_HEADER,
-  // withCredentials: true,
 });
 
 authApi.interceptors.request.use(
@@ -61,13 +54,6 @@ export const uptateUserFn = async (user: { email?: string; name?: string }) => {
   return response.data;
 };
 
-export const verifyEmailFn = async (verificationCode: string) => {
-  const response = await authApi.get<GenericResponse>(
-    `/auth/verifyemail/${verificationCode}`,
-  );
-  return response.data;
-};
-
 export const logoutUserFn = async () => {
   const response = await authApi.get('/users/logout', {
     headers: {
@@ -87,6 +73,3 @@ export const getUserFn = async () => {
 
   return response.data;
 };
-
-//111@12.qq
-//1111

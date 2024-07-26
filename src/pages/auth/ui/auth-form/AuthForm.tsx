@@ -4,7 +4,6 @@ import { useRegister, useLogin } from '../hooks';
 import { Loader } from 'shared/ui';
 
 import './AuthForm.scss';
-import { useUserStore } from 'shared/store';
 
 interface AuthFormProps {
   mode: 'login' | 'register';
@@ -30,8 +29,6 @@ export const AuthForm = ({
   const [formState, setFormState] = useState(initialFormState);
   const { mutate: login, isLoading: isloadLogin } = useLogin();
   const { mutate: register, isLoading } = useRegister();
-
-  // const { data: token, isLoading: isLoadingToken  } = useAuth();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

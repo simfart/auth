@@ -6,8 +6,6 @@ import { registerUserFn } from 'shared/api/auth/authApi';
 export const useRegister = () => {
   const navigate = useNavigate();
 
-  // const store = useUserStore();
-
   const { mutate, isLoading } = useMutation({
     mutationKey: [],
     mutationFn: registerUserFn,

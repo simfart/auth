@@ -5,7 +5,7 @@ export interface IUser {
   created: number;
   ___class: string;
   ownerId: string;
-  "user-token": string;
+  'user-token': string;
   objectId: string;
 }
 
@@ -18,11 +18,7 @@ export interface GenericResponse {
 
 export interface ILoginResponse extends IUser {
   status: string;
-
-  // access_token: string;
-  "user-token": string;
-
-  // user: IUser;
+  'user-token': string;
 }
 
 export interface IUserResponse extends IUser {

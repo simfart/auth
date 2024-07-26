@@ -1,12 +1,13 @@
 import { FC, useState } from 'react';
-import { useUserStore } from 'shared/store';
-
-import './UpdatePage.scss';
 import { Link } from 'react-router-dom';
 import { useUpdateUser } from './hooks/useUpdateUser';
-import { Loader } from '../loader/Loader';
+import { Loader } from '../../../shared/ui/loader/Loader';
+import { useUser } from 'pages/auth/ui/hooks';
+
+import './UpdatePage.scss';
+
 export const UpdatePage: FC = () => {
-  const user = useUserStore().authUser;
+  const { user, isLoading: isLoadingUser } = useUser();
 
   const initialFormState = {
     email: user?.email,
@@ -23,7 +24,7 @@ export const UpdatePage: FC = () => {
     });
   };
 
-  if (isLoading) {
+  if (isLoading || isLoadingUser) {
     return <Loader />;
   }
   return (

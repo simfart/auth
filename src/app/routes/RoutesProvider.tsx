@@ -3,7 +3,7 @@ import { RegisterPage, LoginPage } from 'pages/auth';
 import { FC } from 'react';
 import { HomePage } from 'pages/home';
 import { PageNotFound, ProtectedRoute } from 'shared/ui';
-import { UpdatePage } from 'shared/ui/update-user';
+import { UpdatePage } from 'app/widgets/update-user';
 
 export const RoutesProvider: FC = () => {
   return (
