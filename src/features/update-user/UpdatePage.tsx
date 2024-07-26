@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUpdateUser } from './hooks/useUpdateUser';
-import { Loader } from '../../../shared/ui/loader/Loader';
+import { Loader } from '../../shared/ui/loader/Loader';
 import { useUser } from 'pages/auth/ui/hooks';
 
 import './UpdatePage.scss';
