@@ -2,6 +2,7 @@ import { IUser } from 'shared/api/auth/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { persist } from 'zustand/middleware';
 
 type Store = {
   authUser: IUser | null;
@@ -20,12 +21,17 @@ type Store = {
 
 export const useUserStore = create<Store>()(
   devtools(
-    immer((set) => ({
-      authUser: null,
-      requestLoading: false,
-      setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
-      // setRequestLoading: (isLoading) =>
-      //   set((state) => ({ ...state, requestLoading: isLoading })),
-    })),
+    persist(
+      immer((set) => ({
+        authUser: null,
+        requestLoading: false,
+        setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
+        // setRequestLoading: (isLoading) =>
+        //   set((state) => ({ ...state, requestLoading: isLoading })),
+      })),
+      {
+        name: 'user',
+      },
+    ),
   ),
 );

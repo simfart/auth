@@ -7,6 +7,7 @@ export const useToken = () => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.accessToken],
     queryFn: verifyTokenFn,
+    initialData: !!window.localStorage.getItem('token'),
   });
 
   return useMemo(

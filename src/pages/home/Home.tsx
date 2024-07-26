@@ -8,7 +8,7 @@ import { Header, Loader } from 'shared/ui';
 export const HomePage: FC = () => {
   // const { user, isLoading: isLoadingUser } = useUser();
   const { mutate: logout, isLoading } = useLogout();
-  const user = useUserStore().authUser;
+  const user = useUserStore((store) => store.authUser);
 
   const onLogoutClick = () => {
     logout();

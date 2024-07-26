@@ -11,7 +11,7 @@ export const useUpdateUser = () => {
   const store = useUserStore();
 
   const { mutate, isLoading } = useMutation({
-    mutationKey: [QUERY_KEY.user],
+    mutationKey: ['mutateUser'],
     mutationFn: uptateUserFn,
     onSuccess: (data) => {
       queryClient.invalidateQueries([QUERY_KEY.user]);

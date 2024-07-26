@@ -37,7 +37,7 @@ export const registerUserFn = async (user: {
 
 export const verifyTokenFn = async () => {
   const token = localStorage.getItem('token');
-  console.log('token', token);
+
   return await authApi
     .get<boolean>(`/users/isvalidusertoken/${token}`)
     .then((res) => res.data);

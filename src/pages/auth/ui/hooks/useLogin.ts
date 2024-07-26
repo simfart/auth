@@ -12,7 +12,7 @@ export const useLogin = () => {
   const store = useUserStore();
 
   const { mutate, isLoading } = useMutation({
-    mutationKey: [QUERY_KEY.user],
+    mutationKey: [],
     mutationFn: loginUserFn,
     onSuccess: (data) => {
       window.localStorage.setItem('token', data['user-token']);
@@ -20,6 +20,7 @@ export const useLogin = () => {
 
       queryClient.setQueryData([QUERY_KEY.user], data);
       queryClient.invalidateQueries([QUERY_KEY.accessToken]);
+      queryClient.invalidateQueries([QUERY_KEY.user]);
 
       store.setAuthUser(data);
       navigate('/', { replace: true });
