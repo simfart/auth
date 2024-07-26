@@ -6,6 +6,11 @@ import { useUser } from 'pages/auth/ui/hooks';
 
 import './UpdatePage.scss';
 
+interface IUserForm {
+  name: string;
+  email: string;
+}
+
 export const UpdatePage: FC = () => {
   const { user, isLoading: isLoadingUser } = useUser();
 
@@ -13,15 +18,32 @@ export const UpdatePage: FC = () => {
     email: user?.email,
     name: user?.name,
   };
+
   const [formState, setFormState] = useState(initialFormState);
   const { mutate, isLoading } = useUpdateUser();
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    mutate({
-      name: formState.name,
-      email: formState.email,
-    });
+    const updatedFields: Partial<IUserForm> = {};
+    if (user) {
+      for (const key in formState) {
+        if (
+          formState[key as keyof IUserForm] !== user[key as keyof IUserForm]
+        ) {
+          updatedFields[key as keyof IUserForm] =
+            formState[key as keyof IUserForm];
+        }
+      }
+    }
+    mutate(updatedFields);
   };
 
   if (isLoading || isLoadingUser) {
